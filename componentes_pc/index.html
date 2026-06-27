@@ -1,230 +1,992 @@
 <!DOCTYPE html>
 <html lang="es" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PC Explorer — Aprende los Componentes</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/esindex.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PC Explorer — Aprende los Componentes de la Computadora</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --bg2: #111118;
+  --bg3: #1a1a24;
+  --bg4: #22222e;
+  --border: #2a2a3a;
+  --border2: #3a3a4f;
+  --text: #e8e8f0;
+  --text2: #9090a8;
+  --text3: #6060780;
+  --accent: #7c6af5;
+  --accent2: #9d8fff;
+  --accent-glow: rgba(124,106,245,0.15);
+  --green: #22c55e;
+  --red: #ef4444;
+  --amber: #f59e0b;
+  --cyan: #06b6d4;
+  --pink: #ec4899;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+[data-theme="light"] {
+  --bg: #f0f0f8;
+  --bg2: #ffffff;
+  --bg3: #f8f8ff;
+  --bg4: #ebebf5;
+  --border: #d0d0e0;
+  --border2: #b0b0c8;
+  --text: #1a1a2e;
+  --text2: #4a4a6a;
+  --accent: #5b4de0;
+  --accent2: #7c6af5;
+  --accent-glow: rgba(91,77,224,0.1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 60px;
+}
+[data-theme="light"] nav { background: rgba(240,240,248,0.85); }
+.nav-logo { font-size: 1.1rem; font-weight: 700; color: var(--accent2); letter-spacing: -0.02em; }
+.nav-logo span { color: var(--text); font-weight: 300; }
+.nav-links { display: flex; gap: 0.25rem; }
+.nav-links a {
+  padding: 0.4rem 0.85rem; border-radius: 6px;
+  font-size: 0.82rem; font-weight: 500; color: var(--text2);
+  text-decoration: none; cursor: pointer;
+  transition: all 0.15s;
+}
+.nav-links a:hover, .nav-links a.active { background: var(--bg4); color: var(--text); }
+.nav-right { display: flex; align-items: center; gap: 0.75rem; }
+#theme-btn {
+  width: 36px; height: 20px; border-radius: 10px;
+  background: var(--border2); border: none; cursor: pointer;
+  position: relative; transition: background 0.3s;
+}
+#theme-btn::after {
+  content: ''; position: absolute; top: 2px; left: 2px;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--text); transition: transform 0.3s, background 0.3s;
+}
+[data-theme="light"] #theme-btn { background: var(--accent); }
+[data-theme="light"] #theme-btn::after { transform: translateX(16px); background: white; }
+
+/* SECTIONS */
+.section { display: none; padding: 2rem; max-width: 1100px; margin: 0 auto; }
+.section.active { display: block; }
+
+/* HERO */
+.hero { text-align: center; padding: 5rem 2rem 3rem; }
+.hero-badge {
+  display: inline-block; padding: 0.35rem 1rem;
+  background: var(--accent-glow); border: 1px solid var(--accent);
+  border-radius: 99px; font-size: 0.75rem; font-weight: 600;
+  color: var(--accent2); letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.hero h1 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900;
+  line-height: 1.05; letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--text) 0%, var(--accent2) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; margin-bottom: 1.25rem;
+}
+.hero p { font-size: 1.1rem; color: var(--text2); max-width: 540px; margin: 0 auto 2.5rem; line-height: 1.7; }
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: var(--accent); color: white;
+  padding: 0.85rem 2rem; border-radius: 99px;
+  font-weight: 600; font-size: 0.95rem; cursor: pointer;
+  border: none; transition: all 0.2s; text-decoration: none;
+}
+.hero-cta:hover { background: var(--accent2); transform: translateY(-2px); }
+.hero-cta svg { width: 16px; height: 16px; }
+.hero-stats {
+  display: flex; justify-content: center; gap: 3rem;
+  margin-top: 3rem; padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+.stat { text-align: center; }
+.stat-num { font-size: 1.8rem; font-weight: 900; color: var(--accent2); }
+.stat-lbl { font-size: 0.78rem; color: var(--text2); text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* PC INTERACTIVA */
+.pc-section { padding: 2rem; max-width: 1100px; margin: 0 auto; display: none; }
+.pc-section.active { display: block; }
+.pc-title { text-align: center; margin-bottom: 0.5rem; }
+.pc-title h2 { font-size: 1.8rem; font-weight: 800; }
+.pc-title p { color: var(--text2); margin-top: 0.5rem; }
+.pc-hint {
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  font-size: 0.82rem; color: var(--accent2); margin-bottom: 1.5rem;
+}
+.hint-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+
+/* SVG PC Map */
+.pc-wrapper {
+  display: grid; grid-template-columns: 1fr 380px; gap: 2rem;
+  align-items: start;
+}
+.pc-map-container {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.5rem;
+  position: relative;
+}
+.pc-map-container svg { width: 100%; height: auto; cursor: pointer; }
+.pc-hotspot {
+  cursor: pointer; transition: all 0.2s;
+}
+.pc-hotspot rect, .pc-hotspot circle {
+  transition: all 0.2s; fill-opacity: 0.15;
+}
+.pc-hotspot:hover rect, .pc-hotspot:hover circle,
+.pc-hotspot.selected rect, .pc-hotspot.selected circle {
+  fill-opacity: 0.35; stroke-width: 2;
+}
+.pc-hotspot text { pointer-events: none; }
+
+/* PANEL INFO */
+.pc-info-panel {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.5rem;
+  min-height: 400px; position: sticky; top: 80px;
+}
+.info-empty {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; height: 350px; gap: 1rem; color: var(--text2);
+  text-align: center;
+}
+.info-empty svg { opacity: 0.3; width: 64px; height: 64px; }
+.info-content { display: none; }
+.info-content.visible { display: block; }
+.info-tag {
+  display: inline-block; padding: 0.25rem 0.7rem;
+  border-radius: 99px; font-size: 0.72rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  margin-bottom: 0.75rem;
+}
+.info-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem; }
+.info-desc { color: var(--text2); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.25rem; }
+.info-list { list-style: none; margin-bottom: 1.25rem; }
+.info-list li {
+  display: flex; align-items: flex-start; gap: 0.6rem;
+  font-size: 0.88rem; color: var(--text2); padding: 0.35rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.info-list li:last-child { border: none; }
+.info-list li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.info-fact {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 0.85rem 1rem;
+  font-size: 0.83rem;
+}
+.info-fact strong { color: var(--amber); display: block; margin-bottom: 0.3rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* QUIZ */
+.quiz-container { max-width: 700px; margin: 0 auto; }
+.quiz-progress-bar-wrap { background: var(--bg3); border-radius: 99px; height: 6px; margin-bottom: 2rem; }
+.quiz-progress-bar { height: 6px; border-radius: 99px; background: var(--accent); transition: width 0.4s; }
+.quiz-question { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; }
+.quiz-num { font-size: 0.8rem; color: var(--text2); margin-bottom: 1rem; }
+.quiz-options { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; }
+.quiz-opt {
+  background: var(--bg2); border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm); padding: 0.9rem 1.2rem;
+  cursor: pointer; font-size: 0.92rem; display: flex; align-items: center; gap: 0.75rem;
+  transition: all 0.15s;
+}
+.quiz-opt:hover { border-color: var(--accent); background: var(--accent-glow); }
+.quiz-opt.correct { border-color: var(--green); background: rgba(34,197,94,0.1); color: var(--green); }
+.quiz-opt.wrong { border-color: var(--red); background: rgba(239,68,68,0.1); color: var(--red); }
+.quiz-opt.disabled { pointer-events: none; }
+.quiz-opt-letter {
+  width: 28px; height: 28px; border-radius: 6px;
+  background: var(--bg4); display: flex; align-items: center; justify-content: center;
+  font-size: 0.78rem; font-weight: 700; color: var(--text2); flex-shrink: 0;
+}
+.quiz-feedback {
+  padding: 0.85rem 1.1rem; border-radius: var(--radius-sm); font-size: 0.88rem;
+  margin-bottom: 1.25rem; display: none;
+}
+.quiz-feedback.show { display: block; }
+.quiz-feedback.correct-fb { background: rgba(34,197,94,0.1); border: 1px solid var(--green); color: var(--green); }
+.quiz-feedback.wrong-fb { background: rgba(239,68,68,0.1); border: 1px solid var(--red); color: var(--red); }
+.quiz-next-btn {
+  background: var(--accent); color: white;
+  padding: 0.75rem 2rem; border: none; border-radius: 99px;
+  font-weight: 600; cursor: pointer; transition: all 0.2s; display: none;
+}
+.quiz-next-btn:hover { background: var(--accent2); }
+.quiz-next-btn.show { display: inline-block; }
+.quiz-result { text-align: center; padding: 3rem 2rem; }
+.quiz-score-circle {
+  width: 140px; height: 140px; border-radius: 50%;
+  border: 4px solid var(--accent); display: flex; flex-direction: column;
+  align-items: center; justify-content: center; margin: 0 auto 1.5rem;
+}
+.quiz-score-num { font-size: 2.8rem; font-weight: 900; color: var(--accent2); line-height: 1; }
+.quiz-score-total { font-size: 0.9rem; color: var(--text2); }
+.quiz-result h2 { font-size: 1.6rem; font-weight: 800; margin-bottom: 0.5rem; }
+.quiz-result p { color: var(--text2); margin-bottom: 2rem; }
+.cert-btn {
+  background: var(--accent); color: white;
+  padding: 0.8rem 2rem; border: none; border-radius: 99px;
+  font-weight: 600; cursor: pointer; font-size: 0.95rem;
+  margin-right: 0.75rem; transition: all 0.2s;
+}
+.cert-btn:hover { background: var(--accent2); }
+.restart-btn {
+  background: var(--bg3); color: var(--text);
+  padding: 0.8rem 2rem; border: 1px solid var(--border2); border-radius: 99px;
+  font-weight: 600; cursor: pointer; font-size: 0.95rem; transition: all 0.2s;
+}
+.restart-btn:hover { background: var(--bg4); }
+
+/* GLOSARIO */
+.glosario-search {
+  position: relative; margin-bottom: 2rem;
+}
+.glosario-search input {
+  width: 100%; padding: 1rem 1rem 1rem 3rem;
+  background: var(--bg2); border: 1.5px solid var(--border);
+  border-radius: var(--radius); color: var(--text); font-size: 1rem;
+  font-family: 'Inter', sans-serif; outline: none; transition: border 0.2s;
+}
+.glosario-search input:focus { border-color: var(--accent); }
+.glosario-search svg { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text2); }
+.glosario-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+.glosario-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.25rem;
+  transition: all 0.2s;
+}
+.glosario-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.glosario-card h3 {
+  font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem;
+  font-family: 'JetBrains Mono', monospace; color: var(--accent2);
+}
+.glosario-card p { font-size: 0.85rem; color: var(--text2); line-height: 1.6; }
+.glosario-no-results { text-align: center; padding: 3rem; color: var(--text2); }
+
+/* CERTIFICATE MODAL */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+  display: none; align-items: center; justify-content: center; z-index: 999;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.show { display: flex; }
+.modal {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 16px; padding: 0; max-width: 580px; width: 90%;
+  overflow: hidden;
+}
+#cert-canvas { display: block; width: 100%; }
+.modal-footer {
+  padding: 1rem 1.5rem; display: flex; gap: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+.modal-dl-btn {
+  background: var(--accent); color: white;
+  padding: 0.65rem 1.5rem; border: none; border-radius: 99px;
+  font-weight: 600; cursor: pointer; font-size: 0.88rem;
+}
+.modal-close-btn {
+  background: var(--bg3); color: var(--text);
+  padding: 0.65rem 1.5rem; border: 1px solid var(--border2); border-radius: 99px;
+  font-weight: 600; cursor: pointer; font-size: 0.88rem;
+}
+
+/* PAGE HEADER */
+.page-header { margin-bottom: 2rem; }
+.page-header h2 { font-size: 1.6rem; font-weight: 800; margin-bottom: 0.4rem; }
+.page-header p { color: var(--text2); }
+
+/* CREDITS */
+.credits-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+.credit-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.25rem; text-align: center;
+}
+.credit-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.credit-card h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.25rem; }
+.credit-card p { font-size: 0.8rem; color: var(--text2); }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .pc-wrapper { grid-template-columns: 1fr; }
+  .pc-info-panel { position: static; }
+  .hero h1 { font-size: 2rem; }
+  .hero-stats { gap: 1.5rem; }
+  nav { padding: 0 1rem; }
+  .nav-links a { padding: 0.35rem 0.55rem; font-size: 0.75rem; }
+  .section, .pc-section { padding: 1rem; }
+}
+</style>
 </head>
 <body>
 
-  <!-- ═══════════════════ NAVBAR ═══════════════════ -->
-  <nav id="navbar">
-    <div class="nav-logo">PC<span>Explorer</span></div>
-    <div class="nav-links">
-      <a onclick="goTo('home')"      id="nav-home"      class="active">Inicio</a>
-      <a onclick="goTo('internos')"  id="nav-internos">Internos</a>
-      <a onclick="goTo('externos')"  id="nav-externos">Externos</a>
-      <a onclick="goTo('quiz')"      id="nav-quiz">Quiz</a>
-      <a onclick="goTo('glosario')"  id="nav-glosario">Glosario</a>
-      <a onclick="goTo('creditos')"  id="nav-creditos">Créditos</a>
-    </div>
-    <div class="nav-right">
-      <button id="theme-btn" onclick="toggleTheme()" aria-label="Cambiar modo claro/oscuro"></button>
-    </div>
-  </nav>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">PC<span>Explorer</span></div>
+  <div class="nav-links">
+    <a onclick="goTo('home')" class="active" id="nav-home">Inicio</a>
+    <a onclick="goTo('internos')" id="nav-internos">Internos</a>
+    <a onclick="goTo('externos')" id="nav-externos">Externos</a>
+    <a onclick="goTo('quiz')" id="nav-quiz">Quiz</a>
+    <a onclick="goTo('glosario')" id="nav-glosario">Glosario</a>
+    <a onclick="goTo('creditos')" id="nav-creditos">Créditos</a>
+  </div>
+  <div class="nav-right">
+    <button id="theme-btn" onclick="toggleTheme()" aria-label="Cambiar modo"></button>
+  </div>
+</nav>
 
-  <!-- ═══════════════════ INICIO ═══════════════════ -->
-  <section id="home" class="page active">
-    <div class="hero">
-      <div class="hero-badge">🖥️ Laboratorio Virtual Educativo</div>
-      <h1>Descubre cómo funciona<br/>una computadora</h1>
-      <p>Explora componentes internos y externos de forma interactiva.<br/>Haz clic sobre las partes reales, aprende con el quiz y domina el glosario.</p>
-      <button class="hero-cta" onclick="goTo('internos')">
-        Explorar componentes
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
-      <div class="hero-stats">
-        <div class="stat"><div class="stat-num">14</div><div class="stat-lbl">Componentes</div></div>
-        <div class="stat"><div class="stat-num">10</div><div class="stat-lbl">Preguntas quiz</div></div>
-        <div class="stat"><div class="stat-num">18</div><div class="stat-lbl">Términos glosario</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════ INTERNOS ═══════════════════ -->
-  <section id="internos" class="page">
-    <div class="page-header">
-      <h2>⚙️ Componentes Internos</h2>
-      <p>Haz clic sobre cada zona resaltada de la placa madre real para conocer el componente</p>
-    </div>
-
-    <div class="hint-bar">
-      <span class="hint-dot"></span>
-      Haz clic en cualquier zona resaltada del tablero
-    </div>
-
-    <div class="explorer-layout">
-
-      <!-- IMAGEN REAL CON HOTSPOTS -->
-      <div class="board-container">
-        <div class="board-wrapper">
-          <!-- Imagen real de tu placa madre -->
-          <img src="/imagenes/placa-madre.png" alt="Placa madre MSI A68HM-E33 V2 con AMD A6-7400" class="board-img"id="board-img"
-          />
-
-       <!-- SOCKET DEL PROCESADOR -->
-<div class="hotspot" style="top:36%; left:71%; width:24%; height:26%;" data-part="cpu">
-    <span class="hs-label">Socket del Procesador</span>
-    <span class="hs-pulse"></span>
-</div>
-
-<!-- RANURAS RAM -->
-<div class="hotspot" style="top:76%; left:35%; width:58%; height:10%;" data-part="ram">
-    <span class="hs-label">Memoria RAM</span>
-    <span class="hs-pulse"></span>
-</div>
-
-<!-- CHIPSET NORTE -->
-<div class="hotspot" style="top:22%; left:40%; width:22%; height:20%;" data-part="northbridge">
-    <span class="hs-label">Chipset Norte</span>
-    <span class="hs-pulse"></span>
-</div>
-
-<!-- CHIPSET SUR -->
-<div class="hotspot" style="top:48%; left:45%; width:18%; height:18%;" data-part="southbridge">
-    <span class="hs-label">Chipset Sur</span>
-    <span class="hs-pulse"></span>
-</div>
-
-<!-- RANURAS PCI -->
-<div class="hotspot" style="top:18%; left:2%; width:28%; height:46%;" data-part="pci">
-    <span class="hs-label">Ranuras PCI</span>
-    <span class="hs-pulse"></span>
-</div>
-
-<!-- RANURA AGP -->
-<div class="hotspot" style="top:30%; left:32%; width:6%; height:47%;" data-part="agp">
-    <span class="hs-label">AGP</span>
-    <span class="hs-pulse"></span>
-</div>
-
-<!-- BATERÍA CMOS -->
-<div class="hotspot" style="top:63%; left:1%; width:11%; height:14%;" data-part="cmos">
-    <span class="hs-label">Batería CMOS</span>
-    <span class="hs-pulse"></span>
-</div>
-
-<!-- CONECTOR IDE -->
-<div class="hotspot" style="top:88%; left:33%; width:45%; height:10%;" data-part="ide">
-    <span class="hs-label">Conectores IDE</span>
-    <span class="hs-pulse"></span>
-</div>
-
-<!-- CONECTOR ATX -->
-<div class="hotspot" style="top:15%; left:75%; width:23%; height:10%;" data-part="atx">
-    <span class="hs-label">Conector ATX</span>
-    <span class="hs-pulse"></span>
-</div>
-
-<!-- PUERTOS TRASEROS -->
-<div class="hotspot" style="top:0%; left:34%; width:64%; height:14%;" data-part="io">
-    <span class="hs-label">Puertos Traseros</span>
-    <span class="hs-pulse"></span>
-</div>
-        <!-- Leyenda de componentes -->
-        <div class="board-legend">
-          <span class="legend-item" onclick="showInfo('cpu')"><span class="legend-dot" style="background:#7c6af5"></span>CPU</span>
-          <span class="legend-item" onclick="showInfo('ram')"><span class="legend-dot" style="background:#06b6d4"></span>RAM</span>
-          <span class="legend-item" onclick="showInfo('gpu')"><span class="legend-dot" style="background:#ec4899"></span>GPU Slot</span>
-          <span class="legend-item" onclick="showInfo('ssd')"><span class="legend-dot" style="background:#f59e0b"></span>SATA</span>
-          <span class="legend-item" onclick="showInfo('psu')"><span class="legend-dot" style="background:#22c55e"></span>Fuente</span>
-          <span class="legend-item" onclick="showInfo('puertos')"><span class="legend-dot" style="background:#f97316"></span>Puertos</span>
-        </div>
-      </div>
-
-      <!-- PANEL DE INFORMACIÓN -->
-      <div class="info-panel" id="info-panel">
-        <div class="info-empty" id="info-empty">
-          <div class="info-empty-icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-              <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/>
-            </svg>
-          </div>
-          <p>Haz clic sobre<br/>un componente</p>
-          <small>Placa MSI A68HM-E33 V2<br/>CPU AMD A6-7400</small>
-        </div>
-        <div class="info-content" id="info-content"></div>
-      </div>
-
-    </div><!-- /explorer-layout -->
-  </section>
-
-  <!-- ═══════════════════ EXTERNOS ═══════════════════ -->
-  <section id="externos" class="page">
-    <div class="page-header">
-      <h2>🖱️ Componentes Externos</h2>
-      <p>Periféricos de entrada y salida que interactúan con la computadora</p>
-    </div>
-    <div class="externos-grid" id="externos-grid"></div>
-  </section>
-
-  <!-- ═══════════════════ QUIZ ═══════════════════ -->
-  <section id="quiz" class="page">
-    <div class="page-header">
-      <h2>🧠 Quiz Interactivo</h2>
-      <p>10 preguntas aleatorias — pon a prueba tus conocimientos</p>
-    </div>
-    <div class="quiz-wrap" id="quiz-area"></div>
-  </section>
-
-  <!-- ═══════════════════ GLOSARIO ═══════════════════ -->
-  <section id="glosario" class="page">
-    <div class="page-header">
-      <h2>📖 Glosario Interactivo</h2>
-      <p>Busca cualquier término de informática</p>
-    </div>
-    <div class="glosario-search">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-      </svg>
-      <input
-        type="text"
-        id="glosario-input"
-        placeholder="Escribe: CPU, RAM, SSD, USB..."
-        oninput="filterGlosario(this.value)"
-        autocomplete="off"
-      />
-    </div>
-    <div class="glosario-grid" id="glosario-grid"></div>
-  </section>
-
-  <!-- ═══════════════════ CRÉDITOS ═══════════════════ -->
-  <section id="creditos" class="page">
-    <div class="page-header">
-      <h2>✨ Créditos</h2>
-      <p>Proyecto educativo — HTML · CSS · JavaScript</p>
-    </div>
-    <div class="credits-grid">
-      <div class="credit-card"><div class="credit-icon">🎓</div><h3>Propósito</h3><p>Laboratorio virtual para aprender los componentes de la computadora de forma interactiva</p></div>
-      <div class="credit-card"><div class="credit-icon">💻</div><h3>Tecnologías</h3><p>HTML5 · CSS3 · JavaScript Vanilla · Canvas API</p></div>
-      <div class="credit-card"><div class="credit-icon">🖥️</div><h3>Hardware real</h3><p>Placa madre MSI A68HM-E33 V2 con AMD A6-7400 Series</p></div>
-      <div class="credit-card"><div class="credit-icon">🎨</div><h3>Diseño</h3><p>Modo oscuro/claro · Animaciones · Hotspots interactivos · Responsive</p></div>
-      <div class="credit-card"><div class="credit-icon">🏆</div><h3>Funciones</h3><p>Quiz con puntaje · Certificado descargable · Glosario · Sonido</p></div>
-      <div class="credit-card"><div class="credit-icon">🚀</div><h3>Próximo</h3><p>Ranking con Supabase · Firebase Hosting · Narración por voz</p></div>
-    </div>
-    <div class="credits-note">
-      <strong>Fase 1 ✅</strong> — Diseño moderno, imagen real interactiva, panel de info, quiz, glosario y certificado.<br/>
-      <strong>Fase 2</strong> — Base de datos Supabase con ranking de estudiantes.<br/>
-      <strong>Fase 3</strong> — Firebase Hosting + narración por voz.
-    </div>
-  </section>
-
-  <!-- ═══════════════════ MODAL CERTIFICADO ═══════════════════ -->
-  <div class="modal-overlay" id="cert-modal" onclick="closeCertOnOverlay(event)">
-    <div class="modal-box">
-      <canvas id="cert-canvas" width="580" height="380"></canvas>
-      <div class="modal-footer">
-        <button class="btn-primary" onclick="downloadCert()">⬇️ Descargar certificado</button>
-        <button class="btn-secondary" onclick="closeCert()">Cerrar</button>
-      </div>
+<!-- HOME -->
+<div id="home" class="section active">
+  <div class="hero">
+    <div class="hero-badge">🖥️ Laboratorio Virtual Educativo</div>
+    <h1>Descubre cómo funciona<br>una computadora</h1>
+    <p>Explora componentes internos y externos de forma interactiva. Haz clic sobre las partes, aprende con el quiz y domina el glosario.</p>
+    <a class="hero-cta" onclick="goTo('internos')">
+      Explorar componentes
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">14</div><div class="stat-lbl">Componentes</div></div>
+      <div class="stat"><div class="stat-num">10</div><div class="stat-lbl">Preguntas quiz</div></div>
+      <div class="stat"><div class="stat-num">18</div><div class="stat-lbl">Términos glosario</div></div>
     </div>
   </div>
+</div>
 
-  <script src="js/app.js"></script>
-  <script src="js/quiz.js"></script>
+<!-- INTERNOS -->
+<div id="internos" class="pc-section">
+  <div class="pc-title">
+    <h2>⚙️ Componentes Internos</h2>
+    <p>Haz clic sobre cada componente para aprender sobre él</p>
+  </div>
+  <div class="pc-hint"><div class="hint-dot"></div> Clic en cualquier zona resaltada</div>
+  <div class="pc-wrapper">
+    <div class="pc-map-container">
+      <!-- MOTHERBOARD SVG -->
+      <svg viewBox="0 0 500 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Interior de una computadora con componentes clickeables">
+        <!-- Chasis -->
+        <rect x="10" y="10" width="480" height="400" rx="8" fill="#1a1a24" stroke="#2a2a3a" stroke-width="1.5"/>
+        <!-- Placa Madre base -->
+        <rect x="30" y="30" width="300" height="260" rx="4" fill="#0d2b1a" stroke="#1a4a2a" stroke-width="1"/>
+        <!-- Circuitos decorativos -->
+        <g stroke="#1a3a25" stroke-width="0.5" fill="none">
+          <line x1="60" y1="60" x2="200" y2="60"/>
+          <line x1="60" y1="80" x2="150" y2="80"/>
+          <line x1="200" y1="60" x2="200" y2="120"/>
+          <line x1="250" y1="70" x2="310" y2="70"/>
+          <line x1="250" y1="70" x2="250" y2="140"/>
+          <line x1="80" y1="180" x2="200" y2="180"/>
+          <line x1="80" y1="200" x2="160" y2="200"/>
+        </g>
+        
+        <!-- PLACA MADRE hotspot -->
+        <g class="pc-hotspot" id="hs-placa" onclick="showInfo('placa')">
+          <rect x="30" y="30" width="300" height="260" rx="4" fill="#22c55e" fill-opacity="0.05" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <text x="45" y="52" fill="#22c55e" font-size="9" font-weight="600" font-family="Inter,sans-serif">PLACA MADRE</text>
+        </g>
 
+        <!-- CPU -->
+        <g class="pc-hotspot" id="hs-cpu" onclick="showInfo('cpu')">
+          <rect x="55" y="70" width="90" height="90" rx="4" fill="#7c6af5" fill-opacity="0.2" stroke="#7c6af5" stroke-width="1.5"/>
+          <rect x="65" y="80" width="70" height="70" rx="2" fill="#7c6af5" fill-opacity="0.3"/>
+          <!-- CPU pins decoration -->
+          <g fill="#7c6af5" fill-opacity="0.6">
+            <rect x="68" y="83" width="4" height="4" rx="1"/>
+            <rect x="76" y="83" width="4" height="4" rx="1"/>
+            <rect x="84" y="83" width="4" height="4" rx="1"/>
+            <rect x="92" y="83" width="4" height="4" rx="1"/>
+            <rect x="100" y="83" width="4" height="4" rx="1"/>
+            <rect x="108" y="83" width="4" height="4" rx="1"/>
+            <rect x="116" y="83" width="4" height="4" rx="1"/>
+            <rect x="124" y="83" width="4" height="4" rx="1"/>
+            <rect x="68" y="141" width="4" height="4" rx="1"/>
+            <rect x="76" y="141" width="4" height="4" rx="1"/>
+            <rect x="84" y="141" width="4" height="4" rx="1"/>
+            <rect x="92" y="141" width="4" height="4" rx="1"/>
+            <rect x="100" y="141" width="4" height="4" rx="1"/>
+            <rect x="108" y="141" width="4" height="4" rx="1"/>
+          </g>
+          <text x="100" y="120" text-anchor="middle" fill="#9d8fff" font-size="11" font-weight="700" font-family="Inter,sans-serif">CPU</text>
+          <text x="100" y="133" text-anchor="middle" fill="#7c6af5" font-size="7.5" font-family="Inter,sans-serif">PROCESADOR</text>
+        </g>
+
+        <!-- RAM slots -->
+        <g class="pc-hotspot" id="hs-ram" onclick="showInfo('ram')">
+          <rect x="170" y="65" width="18" height="90" rx="2" fill="#06b6d4" fill-opacity="0.3" stroke="#06b6d4" stroke-width="1.5"/>
+          <rect x="194" y="65" width="18" height="90" rx="2" fill="#06b6d4" fill-opacity="0.3" stroke="#06b6d4" stroke-width="1.5"/>
+          <rect x="218" y="65" width="18" height="90" rx="2" fill="#06b6d4" fill-opacity="0.15" stroke="#06b6d4" stroke-width="1" stroke-dasharray="2,2"/>
+          <rect x="242" y="65" width="18" height="90" rx="2" fill="#06b6d4" fill-opacity="0.15" stroke="#06b6d4" stroke-width="1" stroke-dasharray="2,2"/>
+          <text x="205" y="57" text-anchor="middle" fill="#06b6d4" font-size="9" font-weight="700" font-family="Inter,sans-serif">RAM</text>
+        </g>
+
+        <!-- SSD/HDD -->
+        <g class="pc-hotspot" id="hs-ssd" onclick="showInfo('ssd')">
+          <rect x="55" y="185" width="130" height="55" rx="4" fill="#f59e0b" fill-opacity="0.2" stroke="#f59e0b" stroke-width="1.5"/>
+          <rect x="65" y="195" width="110" height="35" rx="2" fill="#f59e0b" fill-opacity="0.2"/>
+          <g fill="#f59e0b" fill-opacity="0.5">
+            <circle cx="80" cy="213" r="10"/>
+            <circle cx="110" cy="213" r="10"/>
+            <circle cx="140" cy="213" r="10"/>
+          </g>
+          <text x="120" y="252" text-anchor="middle" fill="#f59e0b" font-size="9" font-weight="700" font-family="Inter,sans-serif">SSD / HDD</text>
+        </g>
+
+        <!-- GPU -->
+        <g class="pc-hotspot" id="hs-gpu" onclick="showInfo('gpu')">
+          <rect x="30" y="270" width="300" height="55" rx="4" fill="#ec4899" fill-opacity="0.2" stroke="#ec4899" stroke-width="1.5"/>
+          <rect x="45" y="280" width="120" height="35" rx="2" fill="#ec4899" fill-opacity="0.25"/>
+          <!-- fan 1 -->
+          <circle cx="85" cy="298" r="14" fill="#ec4899" fill-opacity="0.2" stroke="#ec4899" stroke-width="1"/>
+          <circle cx="85" cy="298" r="5" fill="#ec4899" fill-opacity="0.4"/>
+          <!-- fan 2 -->
+          <circle cx="125" cy="298" r="14" fill="#ec4899" fill-opacity="0.2" stroke="#ec4899" stroke-width="1"/>
+          <circle cx="125" cy="298" r="5" fill="#ec4899" fill-opacity="0.4"/>
+          <text x="230" y="302" text-anchor="middle" fill="#ec4899" font-size="10" font-weight="700" font-family="Inter,sans-serif">TARJETA GRÁFICA</text>
+          <text x="230" y="314" text-anchor="middle" fill="#ec4899" font-size="8" font-family="Inter,sans-serif">GPU</text>
+        </g>
+
+        <!-- Fuente de poder (PSU) -->
+        <g class="pc-hotspot" id="hs-psu" onclick="showInfo('psu')">
+          <rect x="340" y="210" width="140" height="120" rx="4" fill="#22c55e" fill-opacity="0.2" stroke="#22c55e" stroke-width="1.5"/>
+          <circle cx="410" cy="265" r="38" fill="#22c55e" fill-opacity="0.15" stroke="#22c55e" stroke-width="1"/>
+          <circle cx="410" cy="265" r="18" fill="#22c55e" fill-opacity="0.3"/>
+          <circle cx="410" cy="265" r="6" fill="#22c55e" fill-opacity="0.6"/>
+          <!-- fan blades -->
+          <g stroke="#22c55e" stroke-width="1.2" fill="none" opacity="0.5">
+            <line x1="410" y1="240" x2="410" y2="252"/>
+            <line x1="410" y1="278" x2="410" y2="290"/>
+            <line x1="385" y1="265" x2="397" y2="265"/>
+            <line x1="423" y1="265" x2="435" y2="265"/>
+            <line x1="393" y1="248" x2="401" y2="256"/>
+            <line x1="419" y1="274" x2="427" y2="282"/>
+            <line x1="427" y1="248" x2="419" y2="256"/>
+            <line x1="401" y1="274" x2="393" y2="282"/>
+          </g>
+          <text x="410" y="315" text-anchor="middle" fill="#22c55e" font-size="9" font-weight="700" font-family="Inter,sans-serif">FUENTE DE PODER</text>
+        </g>
+
+        <!-- Disipador CPU -->
+        <g pointer-events="none">
+          <rect x="58" y="73" width="84" height="84" rx="2" fill="none" stroke="#7c6af5" stroke-width="0.5" stroke-dasharray="2,2" opacity="0.4"/>
+          <text x="100" y="67" text-anchor="middle" fill="#7c6af5" font-size="7" font-family="Inter,sans-serif" opacity="0.6">DISIPADOR</text>
+        </g>
+
+        <!-- Monitor (externo, fuera del chasis) -->
+        <g class="pc-hotspot" id="hs-monitor" onclick="showInfo('monitor'); goTo('externos')">
+          <rect x="342" y="30" width="140" height="95" rx="4" fill="#06b6d4" fill-opacity="0.2" stroke="#06b6d4" stroke-width="1.5"/>
+          <rect x="350" y="37" width="124" height="75" rx="2" fill="#06b6d4" fill-opacity="0.1"/>
+          <!-- screen content -->
+          <rect x="358" y="44" width="108" height="55" rx="1" fill="#06b6d4" fill-opacity="0.15"/>
+          <text x="412" y="74" text-anchor="middle" fill="#06b6d4" font-size="8" font-family="Inter,sans-serif">🖥️</text>
+          <rect x="400" y="125" width="24" height="6" rx="1" fill="#06b6d4" fill-opacity="0.4"/>
+          <rect x="392" y="131" width="40" height="4" rx="1" fill="#06b6d4" fill-opacity="0.3"/>
+          <text x="412" y="120" text-anchor="middle" fill="#06b6d4" font-size="9" font-weight="700" font-family="Inter,sans-serif">MONITOR</text>
+        </g>
+
+        <!-- Cables decorativos -->
+        <g stroke="#3a3a4f" stroke-width="1" fill="none" opacity="0.6">
+          <path d="M340 250 C320 250 320 200 300 200"/>
+          <path d="M340 240 C325 240 325 180 300 180"/>
+          <path d="M340 260 C315 260 315 140 170 140"/>
+        </g>
+        
+        <!-- Labels periféricos externos -->
+        <text x="355" y="185" fill="#9d8fff" font-size="9" font-family="Inter,sans-serif" opacity="0.7">↓ Periféricos en sección Externos</text>
+        <text x="350" y="170" fill="#9d8fff" font-size="8" font-family="JetBrains Mono,monospace" opacity="0.5">Teclado · Mouse · Impresora...</text>
+      </svg>
+    </div>
+
+    <!-- INFO PANEL -->
+    <div class="pc-info-panel">
+      <div class="info-empty" id="info-empty">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/>
+        </svg>
+        <p>Selecciona un componente<br>en el diagrama</p>
+      </div>
+      <div class="info-content" id="info-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- EXTERNOS -->
+<div id="externos" class="section">
+  <div class="page-header">
+    <h2>🖱️ Componentes Externos</h2>
+    <p>Periféricos de entrada y salida que interactúan con la computadora</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem" id="externos-grid"></div>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz" class="section">
+  <div class="page-header">
+    <h2>🧠 Quiz Interactivo</h2>
+    <p>10 preguntas aleatorias para poner a prueba tus conocimientos</p>
+  </div>
+  <div class="quiz-container" id="quiz-area"></div>
+</div>
+
+<!-- GLOSARIO -->
+<div id="glosario" class="section">
+  <div class="page-header">
+    <h2>📖 Glosario Interactivo</h2>
+    <p>Busca cualquier término de informática</p>
+  </div>
+  <div class="glosario-search">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="glosario-input" placeholder="Escribe una palabra: CPU, RAM, SSD..." oninput="filterGlosario(this.value)">
+  </div>
+  <div class="glosario-grid" id="glosario-grid"></div>
+</div>
+
+<!-- CREDITOS -->
+<div id="creditos" class="section">
+  <div class="page-header">
+    <h2>✨ Créditos</h2>
+    <p>Proyecto educativo desarrollado con HTML, CSS y JavaScript</p>
+  </div>
+  <div class="credits-grid">
+    <div class="credit-card"><div class="credit-icon">🎓</div><h3>Propósito</h3><p>Laboratorio virtual para aprender los componentes de la computadora de forma interactiva</p></div>
+    <div class="credit-card"><div class="credit-icon">💻</div><h3>Tecnologías</h3><p>HTML5 · CSS3 · JavaScript Vanilla · Canvas API</p></div>
+    <div class="credit-card"><div class="credit-icon">🎨</div><h3>Diseño</h3><p>Interfaz oscura/clara · Animaciones · Tarjetas interactivas · Responsive</p></div>
+    <div class="credit-card"><div class="credit-icon">📚</div><h3>Nivel</h3><p>Educación Básica y Secundaria · Computación · Educación para el Trabajo</p></div>
+    <div class="credit-card"><div class="credit-icon">🏆</div><h3>Funciones</h3><p>Quiz con puntaje · Certificado descargable · Glosario interactivo · Modo oscuro</p></div>
+    <div class="credit-card"><div class="credit-icon">🚀</div><h3>Próximo</h3><p>Ranking con Supabase · Firebase Hosting · Narración por voz</p></div>
+  </div>
+  <div style="margin-top:2rem;padding:1.5rem;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);">
+    <p style="font-size:0.85rem;color:var(--text2);line-height:1.8;">
+      <strong style="color:var(--accent2)">Fase 1 completada ✅</strong> — Diseño moderno, imagen interactiva, ventanas de info, quiz, glosario y certificado.<br>
+      <strong style="color:var(--text2)">Fase 2 (próximamente)</strong> — Base de datos Supabase con ranking de estudiantes.<br>
+      <strong style="color:var(--text2)">Fase 3 (próximamente)</strong> — Publicación en Firebase Hosting + narración por voz.
+    </p>
+  </div>
+</div>
+
+<!-- CERTIFICATE MODAL -->
+<div class="modal-overlay" id="cert-modal">
+  <div class="modal">
+    <canvas id="cert-canvas" width="580" height="380"></canvas>
+    <div class="modal-footer">
+      <button class="modal-dl-btn" onclick="downloadCert()">⬇️ Descargar PDF</button>
+      <button class="modal-close-btn" onclick="closeCert()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+//  DATA
+// ═══════════════════════════════════════
+const COMPONENTS = {
+  cpu: {
+    tag: 'CPU', tagColor: '#7c6af5',
+    title: 'Procesador (CPU)',
+    desc: 'El cerebro de la computadora. Ejecuta todas las instrucciones y coordina el funcionamiento del sistema completo.',
+    features: ['Ejecuta instrucciones del sistema operativo', 'Procesa datos matemáticos y lógicos', 'Coordina todos los componentes', 'Controla el flujo de información'],
+    fact: 'Su velocidad se mide en GHz (gigahercios). Los procesadores modernos tienen múltiples núcleos (cores) que trabajan en paralelo.'
+  },
+  ram: {
+    tag: 'RAM', tagColor: '#06b6d4',
+    title: 'Memoria RAM',
+    desc: 'Memoria de acceso aleatorio. Almacena temporalmente los datos y programas que están en uso en ese momento.',
+    features: ['Almacena datos de forma temporal', 'Permite multitarea fluida', 'Más RAM = mayor rendimiento', 'Tipos: DDR4, DDR5'],
+    fact: 'Al apagar la computadora, toda la información de la RAM se borra. Por eso necesitas guardar tus archivos.'
+  },
+  placa: {
+    tag: 'MB', tagColor: '#22c55e',
+    title: 'Placa Madre',
+    desc: 'El circuito principal que conecta y comunica todos los componentes de la computadora entre sí.',
+    features: ['Conecta CPU, RAM, GPU y almacenamiento', 'Contiene el BIOS/UEFI', 'Regula la energía a los componentes', 'Tiene ranuras de expansión (PCIe)'],
+    fact: 'También llamada "motherboard". Sin ella, ningún componente podría comunicarse con otro.'
+  },
+  ssd: {
+    tag: 'ALMACENAMIENTO', tagColor: '#f59e0b',
+    title: 'SSD / HDD',
+    desc: 'Dispositivos de almacenamiento permanente. Guardan el sistema operativo, programas y archivos del usuario.',
+    features: ['SSD: velocidad muy alta, sin partes móviles', 'HDD: mayor capacidad, más económico', 'NVMe SSD: hasta 10x más rápido que HDD', 'Almacenamiento permanente (no se borra al apagar)'],
+    fact: 'Un SSD NVMe puede leer datos a 3500 MB/s, mientras un HDD tradicional solo llega a 150 MB/s.'
+  },
+  gpu: {
+    tag: 'GPU', tagColor: '#ec4899',
+    title: 'Tarjeta Gráfica',
+    desc: 'Procesa y renderiza imágenes, vídeos y gráficos 3D. Esencial para videojuegos, diseño y edición de vídeo.',
+    features: ['Renderiza imágenes y vídeo en tiempo real', 'Tiene su propia memoria VRAM', 'Esencial para gaming y diseño 3D', 'También usada para IA y minería de datos'],
+    fact: 'Una GPU moderna tiene miles de núcleos pequeños. La RTX 4090 tiene 16,384 núcleos CUDA.'
+  },
+  psu: {
+    tag: 'PSU', tagColor: '#22c55e',
+    title: 'Fuente de Poder',
+    desc: 'Convierte la corriente alterna (AC) de la toma eléctrica en corriente continua (DC) para alimentar todos los componentes.',
+    features: ['Convierte AC a DC (12V, 5V, 3.3V)', 'Su potencia se mide en Watts', 'El ventilador disipa el calor generado', 'Certificación 80 Plus garantiza eficiencia'],
+    fact: 'Una PSU de mala calidad puede dañar todos tus componentes. Siempre elige una certificada 80 Plus.'
+  },
+  monitor: {
+    tag: 'EXTERNO', tagColor: '#06b6d4',
+    title: 'Monitor',
+    desc: 'Dispositivo de salida que muestra la información visual procesada por la tarjeta gráfica.',
+    features: ['Tipos: LED, IPS, OLED, TN', 'Resolución: FHD, QHD, 4K', 'Frecuencia de actualización: 60Hz a 360Hz', 'Conectores: HDMI, DisplayPort, VGA'],
+    fact: 'Los monitores IPS tienen mejores colores pero los TN son más rápidos para gaming competitivo.'
+  }
+};
+
+const EXTERNOS_DATA = [
+  { icon: '🖥️', name: 'Monitor', tipo: 'Salida', desc: 'Muestra la información visual. Tipos: LED, IPS, OLED. Resoluciones desde FHD hasta 4K.' },
+  { icon: '⌨️', name: 'Teclado', tipo: 'Entrada', desc: 'Dispositivo de entrada principal para escribir texto y ejecutar comandos. Tipos: mecánico, membrana, óptico.' },
+  { icon: '🖱️', name: 'Mouse', tipo: 'Entrada', desc: 'Controla el cursor en pantalla. Tipos: óptico, láser, trackball. Permite seleccionar y ejecutar acciones.' },
+  { icon: '🖨️', name: 'Impresora', tipo: 'Salida', desc: 'Transfiere texto e imágenes digitales a papel u otros medios físicos. Tipos: láser, inkjet, 3D.' },
+  { icon: '📠', name: 'Escáner', tipo: 'Entrada', desc: 'Digitaliza documentos y fotografías físicas, convirtiéndolos en archivos digitales editables.' },
+  { icon: '🔊', name: 'Parlantes', tipo: 'Salida', desc: 'Reproducen sonido generado por la tarjeta de sonido. Pueden ser estéreo, 5.1 o 7.1 surround.' },
+  { icon: '🎙️', name: 'Micrófono', tipo: 'Entrada', desc: 'Captura sonido del entorno y lo convierte en señal digital. Usado en videoconferencias y grabaciones.' },
+  { icon: '📷', name: 'Webcam', tipo: 'Entrada/Salida', desc: 'Captura vídeo en tiempo real para videoconferencias, streaming y reconocimiento facial.' },
+];
+
+const GLOSARIO_DATA = [
+  { term: 'Hardware', def: 'Conjunto de componentes físicos de una computadora: pantalla, teclado, placa madre, etc.' },
+  { term: 'Software', def: 'Programas e instrucciones que hacen funcionar el hardware: sistemas operativos, aplicaciones, juegos.' },
+  { term: 'CPU', def: 'Central Processing Unit — procesador principal que ejecuta instrucciones y controla el sistema.' },
+  { term: 'RAM', def: 'Random Access Memory — memoria temporal que almacena datos de los programas en ejecución.' },
+  { term: 'SSD', def: 'Solid State Drive — disco de almacenamiento sin partes móviles, muy rápido y silencioso.' },
+  { term: 'HDD', def: 'Hard Disk Drive — disco duro tradicional con platos magnéticos giratorios y mayor capacidad.' },
+  { term: 'GPU', def: 'Graphics Processing Unit — tarjeta gráfica que renderiza imágenes, vídeos y gráficos 3D.' },
+  { term: 'Periférico', def: 'Dispositivo externo conectado a la computadora: teclado, mouse, impresora, monitor.' },
+  { term: 'BIOS', def: 'Basic Input Output System — firmware que inicia el hardware al encender la computadora.' },
+  { term: 'GHz', def: 'Gigahercios — unidad de medida de la velocidad del procesador (1 GHz = 1000 millones de ciclos/seg).' },
+  { term: 'PCIe', def: 'Peripheral Component Interconnect Express — ranura de expansión de alta velocidad en la placa madre.' },
+  { term: 'NVMe', def: 'Non-Volatile Memory Express — protocolo ultrarrápido para SSDs conectados por PCIe.' },
+  { term: 'Byte', def: 'Unidad básica de almacenamiento digital. 1 Byte = 8 bits. 1 GB = 1024 MB.' },
+  { term: 'Overclock', def: 'Aumentar la velocidad del procesador o GPU más allá de los valores de fábrica para mayor rendimiento.' },
+  { term: 'Drivers', def: 'Programas que permiten al sistema operativo comunicarse con el hardware instalado.' },
+  { term: 'Núcleo (Core)', def: 'Unidad de procesamiento dentro de la CPU. Más núcleos = mayor capacidad de multitarea.' },
+  { term: 'VRAM', def: 'Video RAM — memoria dedicada de la tarjeta gráfica para almacenar texturas y datos visuales.' },
+  { term: 'USB', def: 'Universal Serial Bus — estándar de conexión para periféricos. Versiones: USB 2.0, 3.0, Type-C.' },
+];
+
+const QUIZ_QUESTIONS = [
+  { q: '¿Cuál es el "cerebro" de la computadora?', opts: ['Monitor', 'CPU', 'Teclado', 'Impresora'], ans: 1, exp: 'La CPU (Procesador) es el componente que ejecuta instrucciones y controla todo el sistema.' },
+  { q: '¿Qué tipo de memoria almacena datos de forma TEMPORAL?', opts: ['SSD', 'HDD', 'RAM', 'USB'], ans: 2, exp: 'La RAM almacena temporalmente los datos de los programas en ejecución. Al apagar se borra.' },
+  { q: '¿Qué componente muestra imágenes en la pantalla?', opts: ['CPU', 'RAM', 'Tarjeta Gráfica (GPU)', 'Fuente de Poder'], ans: 2, exp: 'La GPU procesa y envía la señal de vídeo al monitor.' },
+  { q: '¿Cuál es la diferencia principal entre SSD y HDD?', opts: ['El SSD usa agua para enfriar', 'El SSD no tiene partes móviles y es más rápido', 'El HDD es más moderno', 'No hay diferencia'], ans: 1, exp: 'El SSD usa chips de memoria flash (sin piezas móviles), mientras el HDD usa platos magnéticos giratorios.' },
+  { q: '¿Qué es la Placa Madre?', opts: ['Un juego de PC', 'El monitor principal', 'El circuito que conecta todos los componentes', 'La fuente de energía'], ans: 2, exp: 'La placa madre (motherboard) es el circuito principal que conecta y comunica todos los componentes.' },
+  { q: '¿En qué unidad se mide la velocidad del procesador?', opts: ['Watts', 'GB', 'GHz', 'Pixels'], ans: 2, exp: 'La velocidad del procesador se mide en GHz (Gigahercios), que indica millones de ciclos por segundo.' },
+  { q: '¿Cuál es la función de la Fuente de Poder?', opts: ['Guardar archivos', 'Convertir AC en DC para alimentar los componentes', 'Procesar gráficos', 'Conectar a internet'], ans: 1, exp: 'La PSU convierte la corriente alterna (AC) del tomacorriente en corriente continua (DC) para el PC.' },
+  { q: '¿Qué es un periférico?', opts: ['El interior de la CPU', 'Dispositivo externo conectado a la computadora', 'Un tipo de memoria', 'El núcleo del procesador'], ans: 1, exp: 'Periférico es cualquier dispositivo externo: teclado, mouse, impresora, monitor, etc.' },
+  { q: '¿Qué significa RAM?', opts: ['Really Amazing Memory', 'Random Access Memory', 'Read All Memory', 'Rapid Application Module'], ans: 1, exp: 'RAM = Random Access Memory. Memoria de acceso aleatorio.' },
+  { q: '¿Cuál componente es dispositivo de SALIDA?', opts: ['Teclado', 'Mouse', 'Monitor', 'Micrófono'], ans: 2, exp: 'El monitor es un dispositivo de salida porque muestra información al usuario. El teclado, mouse y micrófono son de entrada.' },
+];
+
+// ═══════════════════════════════════════
+//  NAVIGATION
+// ═══════════════════════════════════════
+function goTo(id) {
+  document.querySelectorAll('.section, .pc-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const el = document.getElementById(id);
+  if (el) el.classList.add('active');
+  const nav = document.getElementById('nav-' + id);
+  if (nav) nav.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleTheme() {
+  const html = document.documentElement;
+  html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+}
+
+// ═══════════════════════════════════════
+//  PC INFO PANEL
+// ═══════════════════════════════════════
+function showInfo(id) {
+  const data = COMPONENTS[id];
+  if (!data) return;
+  document.querySelectorAll('.pc-hotspot').forEach(h => h.classList.remove('selected'));
+  const hs = document.getElementById('hs-' + id);
+  if (hs) hs.classList.add('selected');
+  document.getElementById('info-empty').style.display = 'none';
+  const content = document.getElementById('info-content');
+  content.innerHTML = `
+    <span class="info-tag" style="background:${data.tagColor}22;color:${data.tagColor};border:1px solid ${data.tagColor}44">${data.tag}</span>
+    <div class="info-title">${data.title}</div>
+    <p class="info-desc">${data.desc}</p>
+    <ul class="info-list">
+      ${data.features.map(f => `<li>${f}</li>`).join('')}
+    </ul>
+    <div class="info-fact">
+      <strong>💡 Dato curioso</strong>
+      ${data.fact}
+    </div>
+  `;
+  content.classList.add('visible');
+  // sound
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.frequency.value = 440; gain.gain.value = 0.05;
+    osc.start(); gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+    osc.stop(ctx.currentTime + 0.15);
+  } catch(e){}
+}
+
+// ═══════════════════════════════════════
+//  EXTERNOS
+// ═══════════════════════════════════════
+function renderExternos() {
+  const grid = document.getElementById('externos-grid');
+  const typeColors = { 'Entrada': '#22c55e', 'Salida': '#06b6d4', 'Entrada/Salida': '#7c6af5' };
+  grid.innerHTML = EXTERNOS_DATA.map(c => `
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;transition:all 0.2s;cursor:default"
+         onmouseover="this.style.borderColor=var('--border2');this.style.transform='translateY(-2px)'"
+         onmouseout="this.style.borderColor='';this.style.transform=''">
+      <div style="font-size:2rem;margin-bottom:0.75rem">${c.icon}</div>
+      <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+        <h3 style="font-size:1rem;font-weight:700">${c.name}</h3>
+        <span style="font-size:0.7rem;padding:0.2rem 0.55rem;border-radius:99px;background:${typeColors[c.tipo]}22;color:${typeColors[c.tipo]};font-weight:600">${c.tipo}</span>
+      </div>
+      <p style="font-size:0.85rem;color:var(--text2);line-height:1.6">${c.desc}</p>
+    </div>
+  `).join('');
+}
+
+// ═══════════════════════════════════════
+//  GLOSARIO
+// ═══════════════════════════════════════
+function renderGlosario(filter = '') {
+  const grid = document.getElementById('glosario-grid');
+  const filtered = GLOSARIO_DATA.filter(g =>
+    g.term.toLowerCase().includes(filter.toLowerCase()) ||
+    g.def.toLowerCase().includes(filter.toLowerCase())
+  );
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="glosario-no-results">No se encontraron términos para "' + filter + '"</div>';
+    return;
+  }
+  grid.innerHTML = filtered.map(g => `
+    <div class="glosario-card">
+      <h3>${g.term}</h3>
+      <p>${g.def}</p>
+    </div>
+  `).join('');
+}
+function filterGlosario(val) { renderGlosario(val); }
+
+// ═══════════════════════════════════════
+//  QUIZ
+// ═══════════════════════════════════════
+let quizState = { questions: [], idx: 0, score: 0, answered: false, playerName: '' };
+
+function startQuiz() {
+  const shuffled = [...QUIZ_QUESTIONS].sort(() => Math.random() - 0.5).slice(0, 10);
+  quizState = { questions: shuffled, idx: 0, score: 0, answered: false };
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const area = document.getElementById('quiz-area');
+  const { questions, idx } = quizState;
+  if (idx >= questions.length) { renderResult(); return; }
+  const q = questions[idx];
+  const letters = ['A', 'B', 'C', 'D'];
+  const pct = (idx / questions.length) * 100;
+  area.innerHTML = `
+    <div class="quiz-progress-bar-wrap"><div class="quiz-progress-bar" style="width:${pct}%"></div></div>
+    <div class="quiz-num">Pregunta ${idx + 1} de ${questions.length} · Puntaje: ${quizState.score}</div>
+    <div class="quiz-question">${q.q}</div>
+    <div class="quiz-options">
+      ${q.opts.map((opt, i) => `
+        <div class="quiz-opt" onclick="selectAnswer(${i})" id="opt-${i}">
+          <div class="quiz-opt-letter">${letters[i]}</div>
+          ${opt}
+        </div>
+      `).join('')}
+    </div>
+    <div class="quiz-feedback" id="quiz-feedback"></div>
+    <button class="quiz-next-btn" id="quiz-next" onclick="nextQuestion()">
+      ${idx + 1 < questions.length ? 'Siguiente pregunta →' : 'Ver resultado →'}
+    </button>
+  `;
+}
+
+function selectAnswer(i) {
+  if (quizState.answered) return;
+  quizState.answered = true;
+  const q = quizState.questions[quizState.idx];
+  const correct = q.ans === i;
+  if (correct) quizState.score++;
+  document.querySelectorAll('.quiz-opt').forEach((el, j) => {
+    el.classList.add('disabled');
+    if (j === q.ans) el.classList.add('correct');
+    else if (j === i && !correct) el.classList.add('wrong');
+  });
+  const fb = document.getElementById('quiz-feedback');
+  fb.className = 'quiz-feedback show ' + (correct ? 'correct-fb' : 'wrong-fb');
+  fb.innerHTML = (correct ? '✅ ¡Correcto! ' : '❌ Incorrecto. ') + q.exp;
+  document.getElementById('quiz-next').classList.add('show');
+  // sound
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.frequency.value = correct ? 660 : 220;
+    gain.gain.value = 0.05;
+    osc.start();
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+    osc.stop(ctx.currentTime + 0.3);
+  } catch(e){}
+}
+
+function nextQuestion() {
+  quizState.idx++;
+  quizState.answered = false;
+  renderQuestion();
+}
+
+function renderResult() {
+  const { score, questions } = quizState;
+  const pct = Math.round((score / questions.length) * 100);
+  let msg = pct >= 90 ? '🏆 ¡Excelente! Eres un experto en hardware.' :
+            pct >= 70 ? '🎉 ¡Muy bien! Tienes buenos conocimientos.' :
+            pct >= 50 ? '📚 Bien, pero puedes mejorar repasando el material.' :
+                        '💪 Sigue estudiando, ¡la práctica hace al maestro!';
+  document.getElementById('quiz-area').innerHTML = `
+    <div class="quiz-result">
+      <div class="quiz-score-circle">
+        <div class="quiz-score-num">${score}</div>
+        <div class="quiz-score-total">de ${questions.length}</div>
+      </div>
+      <h2>${pct}% de aciertos</h2>
+      <p>${msg}</p>
+      <button class="cert-btn" onclick="showCert()">🏅 Ver certificado</button>
+      <button class="restart-btn" onclick="startQuiz()">Intentar de nuevo</button>
+    </div>
+  `;
+}
+
+// ═══════════════════════════════════════
+//  CERTIFICATE
+// ═══════════════════════════════════════
+function showCert() {
+  document.getElementById('cert-modal').classList.add('show');
+  drawCert();
+}
+function closeCert() { document.getElementById('cert-modal').classList.remove('show'); }
+
+function drawCert() {
+  const canvas = document.getElementById('cert-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const score = quizState.score, total = quizState.questions.length;
+  const pct = Math.round((score / total) * 100);
+  const today = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
+
+  // BG
+  ctx.fillStyle = '#0a0a0f';
+  ctx.fillRect(0, 0, W, H);
+
+  // Border
+  ctx.strokeStyle = '#7c6af5';
+  ctx.lineWidth = 3;
+  ctx.strokeRect(12, 12, W - 24, H - 24);
+  ctx.strokeStyle = '#9d8fff';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(18, 18, W - 36, H - 36);
+
+  // Corner decorations
+  const corners = [[24, 24], [W - 24, 24], [24, H - 24], [W - 24, H - 24]];
+  corners.forEach(([x, y]) => {
+    ctx.fillStyle = '#7c6af5';
+    ctx.beginPath(); ctx.arc(x, y, 5, 0, Math.PI * 2); ctx.fill();
+  });
+
+  // Title
+  ctx.fillStyle = '#7c6af5';
+  ctx.font = 'bold 13px Inter, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('PC EXPLORER — LABORATORIO VIRTUAL', W / 2, 65);
+
+  ctx.fillStyle = '#e8e8f0';
+  ctx.font = 'bold 26px Inter, sans-serif';
+  ctx.fillText('Certificado de Participación', W / 2, 105);
+
+  ctx.fillStyle = '#9090a8';
+  ctx.font = '13px Inter, sans-serif';
+  ctx.fillText('Se certifica que el estudiante completó el Quiz Interactivo', W / 2, 140);
+  ctx.fillText('con los siguientes resultados:', W / 2, 158);
+
+  // Score badge
+  ctx.fillStyle = '#7c6af5';
+  ctx.beginPath();
+  ctx.roundRect(W/2 - 80, 175, 160, 70, 12);
+  ctx.fill();
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 32px Inter, sans-serif';
+  ctx.fillText(`${score}/${total}`, W / 2, 217);
+  ctx.font = '12px Inter, sans-serif';
+  ctx.fillText(`${pct}% de aciertos`, W / 2, 235);
+
+  // Message
+  ctx.fillStyle = '#e8e8f0';
+  const levelText = pct >= 90 ? '🏆 Nivel: EXPERTO EN HARDWARE' :
+                    pct >= 70 ? '🎓 Nivel: AVANZADO' :
+                    pct >= 50 ? '📚 Nivel: INTERMEDIO' : '💪 Nivel: EN PROGRESO';
+  ctx.font = 'bold 15px Inter, sans-serif';
+  ctx.fillText(levelText, W / 2, 285);
+
+  // Date
+  ctx.fillStyle = '#9090a8';
+  ctx.font = '12px Inter, sans-serif';
+  ctx.fillText(`Fecha: ${today}`, W / 2, 325);
+
+  // Footer
+  ctx.strokeStyle = '#2a2a3a';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(80, 345); ctx.lineTo(W - 80, 345); ctx.stroke();
+
+  ctx.fillStyle = '#9090a8';
+  ctx.font = '11px Inter, sans-serif';
+  ctx.fillText('PC Explorer — Aprende los Componentes de la Computadora', W / 2, 365);
+}
+
+function downloadCert() {
+  const canvas = document.getElementById('cert-canvas');
+  const a = document.createElement('a');
+  a.download = 'certificado-pc-explorer.png';
+  a.href = canvas.toDataURL('image/png');
+  a.click();
+}
+
+// ═══════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════
+renderExternos();
+renderGlosario();
+startQuiz();
+
+// Make nav work for home
+document.getElementById('nav-home').onclick = () => goTo('home');
+</script>
 </body>
 </html>
