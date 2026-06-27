@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PC Explorer — Aprende los Componentes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/esindex.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════ NAVBAR ═══════════════════ -->
+  <nav id="navbar">
+    <div class="nav-logo">PC<span>Explorer</span></div>
+    <div class="nav-links">
+      <a onclick="goTo('home')"      id="nav-home"      class="active">Inicio</a>
+      <a onclick="goTo('internos')"  id="nav-internos">Internos</a>
+      <a onclick="goTo('externos')"  id="nav-externos">Externos</a>
+      <a onclick="goTo('quiz')"      id="nav-quiz">Quiz</a>
+      <a onclick="goTo('glosario')"  id="nav-glosario">Glosario</a>
+      <a onclick="goTo('creditos')"  id="nav-creditos">Créditos</a>
+    </div>
+    <div class="nav-right">
+      <button id="theme-btn" onclick="toggleTheme()" aria-label="Cambiar modo claro/oscuro"></button>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════ INICIO ═══════════════════ -->
+  <section id="home" class="page active">
+    <div class="hero">
+      <div class="hero-badge">🖥️ Laboratorio Virtual Educativo</div>
+      <h1>Descubre cómo funciona<br/>una computadora</h1>
+      <p>Explora componentes internos y externos de forma interactiva.<br/>Haz clic sobre las partes reales, aprende con el quiz y domina el glosario.</p>
+      <button class="hero-cta" onclick="goTo('internos')">
+        Explorar componentes
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-num">14</div><div class="stat-lbl">Componentes</div></div>
+        <div class="stat"><div class="stat-num">10</div><div class="stat-lbl">Preguntas quiz</div></div>
+        <div class="stat"><div class="stat-num">18</div><div class="stat-lbl">Términos glosario</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ INTERNOS ═══════════════════ -->
+  <section id="internos" class="page">
+    <div class="page-header">
+      <h2>⚙️ Componentes Internos</h2>
+      <p>Haz clic sobre cada zona resaltada de la placa madre real para conocer el componente</p>
+    </div>
+
+    <div class="hint-bar">
+      <span class="hint-dot"></span>
+      Haz clic en cualquier zona resaltada del tablero
+    </div>
+
+    <div class="explorer-layout">
+
+      <!-- IMAGEN REAL CON HOTSPOTS -->
+      <div class="board-container">
+        <div class="board-wrapper">
+          <!-- Imagen real de tu placa madre -->
+          <img src="/imagenes/placa-madre.png" alt="Placa madre MSI A68HM-E33 V2 con AMD A6-7400" class="board-img"id="board-img"
+          />
+
+       <!-- SOCKET DEL PROCESADOR -->
+<div class="hotspot" style="top:36%; left:71%; width:24%; height:26%;" data-part="cpu">
+    <span class="hs-label">Socket del Procesador</span>
+    <span class="hs-pulse"></span>
+</div>
+
+<!-- RANURAS RAM -->
+<div class="hotspot" style="top:76%; left:35%; width:58%; height:10%;" data-part="ram">
+    <span class="hs-label">Memoria RAM</span>
+    <span class="hs-pulse"></span>
+</div>
+
+<!-- CHIPSET NORTE -->
+<div class="hotspot" style="top:22%; left:40%; width:22%; height:20%;" data-part="northbridge">
+    <span class="hs-label">Chipset Norte</span>
+    <span class="hs-pulse"></span>
+</div>
+
+<!-- CHIPSET SUR -->
+<div class="hotspot" style="top:48%; left:45%; width:18%; height:18%;" data-part="southbridge">
+    <span class="hs-label">Chipset Sur</span>
+    <span class="hs-pulse"></span>
+</div>
+
+<!-- RANURAS PCI -->
+<div class="hotspot" style="top:18%; left:2%; width:28%; height:46%;" data-part="pci">
+    <span class="hs-label">Ranuras PCI</span>
+    <span class="hs-pulse"></span>
+</div>
+
+<!-- RANURA AGP -->
+<div class="hotspot" style="top:30%; left:32%; width:6%; height:47%;" data-part="agp">
+    <span class="hs-label">AGP</span>
+    <span class="hs-pulse"></span>
+</div>
+
+<!-- BATERÍA CMOS -->
+<div class="hotspot" style="top:63%; left:1%; width:11%; height:14%;" data-part="cmos">
+    <span class="hs-label">Batería CMOS</span>
+    <span class="hs-pulse"></span>
+</div>
+
+<!-- CONECTOR IDE -->
+<div class="hotspot" style="top:88%; left:33%; width:45%; height:10%;" data-part="ide">
+    <span class="hs-label">Conectores IDE</span>
+    <span class="hs-pulse"></span>
+</div>
+
+<!-- CONECTOR ATX -->
+<div class="hotspot" style="top:15%; left:75%; width:23%; height:10%;" data-part="atx">
+    <span class="hs-label">Conector ATX</span>
+    <span class="hs-pulse"></span>
+</div>
+
+<!-- PUERTOS TRASEROS -->
+<div class="hotspot" style="top:0%; left:34%; width:64%; height:14%;" data-part="io">
+    <span class="hs-label">Puertos Traseros</span>
+    <span class="hs-pulse"></span>
+</div>
+        <!-- Leyenda de componentes -->
+        <div class="board-legend">
+          <span class="legend-item" onclick="showInfo('cpu')"><span class="legend-dot" style="background:#7c6af5"></span>CPU</span>
+          <span class="legend-item" onclick="showInfo('ram')"><span class="legend-dot" style="background:#06b6d4"></span>RAM</span>
+          <span class="legend-item" onclick="showInfo('gpu')"><span class="legend-dot" style="background:#ec4899"></span>GPU Slot</span>
+          <span class="legend-item" onclick="showInfo('ssd')"><span class="legend-dot" style="background:#f59e0b"></span>SATA</span>
+          <span class="legend-item" onclick="showInfo('psu')"><span class="legend-dot" style="background:#22c55e"></span>Fuente</span>
+          <span class="legend-item" onclick="showInfo('puertos')"><span class="legend-dot" style="background:#f97316"></span>Puertos</span>
+        </div>
+      </div>
+
+      <!-- PANEL DE INFORMACIÓN -->
+      <div class="info-panel" id="info-panel">
+        <div class="info-empty" id="info-empty">
+          <div class="info-empty-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+              <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/>
+            </svg>
+          </div>
+          <p>Haz clic sobre<br/>un componente</p>
+          <small>Placa MSI A68HM-E33 V2<br/>CPU AMD A6-7400</small>
+        </div>
+        <div class="info-content" id="info-content"></div>
+      </div>
+
+    </div><!-- /explorer-layout -->
+  </section>
+
+  <!-- ═══════════════════ EXTERNOS ═══════════════════ -->
+  <section id="externos" class="page">
+    <div class="page-header">
+      <h2>🖱️ Componentes Externos</h2>
+      <p>Periféricos de entrada y salida que interactúan con la computadora</p>
+    </div>
+    <div class="externos-grid" id="externos-grid"></div>
+  </section>
+
+  <!-- ═══════════════════ QUIZ ═══════════════════ -->
+  <section id="quiz" class="page">
+    <div class="page-header">
+      <h2>🧠 Quiz Interactivo</h2>
+      <p>10 preguntas aleatorias — pon a prueba tus conocimientos</p>
+    </div>
+    <div class="quiz-wrap" id="quiz-area"></div>
+  </section>
+
+  <!-- ═══════════════════ GLOSARIO ═══════════════════ -->
+  <section id="glosario" class="page">
+    <div class="page-header">
+      <h2>📖 Glosario Interactivo</h2>
+      <p>Busca cualquier término de informática</p>
+    </div>
+    <div class="glosario-search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input
+        type="text"
+        id="glosario-input"
+        placeholder="Escribe: CPU, RAM, SSD, USB..."
+        oninput="filterGlosario(this.value)"
+        autocomplete="off"
+      />
+    </div>
+    <div class="glosario-grid" id="glosario-grid"></div>
+  </section>
+
+  <!-- ═══════════════════ CRÉDITOS ═══════════════════ -->
+  <section id="creditos" class="page">
+    <div class="page-header">
+      <h2>✨ Créditos</h2>
+      <p>Proyecto educativo — HTML · CSS · JavaScript</p>
+    </div>
+    <div class="credits-grid">
+      <div class="credit-card"><div class="credit-icon">🎓</div><h3>Propósito</h3><p>Laboratorio virtual para aprender los componentes de la computadora de forma interactiva</p></div>
+      <div class="credit-card"><div class="credit-icon">💻</div><h3>Tecnologías</h3><p>HTML5 · CSS3 · JavaScript Vanilla · Canvas API</p></div>
+      <div class="credit-card"><div class="credit-icon">🖥️</div><h3>Hardware real</h3><p>Placa madre MSI A68HM-E33 V2 con AMD A6-7400 Series</p></div>
+      <div class="credit-card"><div class="credit-icon">🎨</div><h3>Diseño</h3><p>Modo oscuro/claro · Animaciones · Hotspots interactivos · Responsive</p></div>
+      <div class="credit-card"><div class="credit-icon">🏆</div><h3>Funciones</h3><p>Quiz con puntaje · Certificado descargable · Glosario · Sonido</p></div>
+      <div class="credit-card"><div class="credit-icon">🚀</div><h3>Próximo</h3><p>Ranking con Supabase · Firebase Hosting · Narración por voz</p></div>
+    </div>
+    <div class="credits-note">
+      <strong>Fase 1 ✅</strong> — Diseño moderno, imagen real interactiva, panel de info, quiz, glosario y certificado.<br/>
+      <strong>Fase 2</strong> — Base de datos Supabase con ranking de estudiantes.<br/>
+      <strong>Fase 3</strong> — Firebase Hosting + narración por voz.
+    </div>
+  </section>
+
+  <!-- ═══════════════════ MODAL CERTIFICADO ═══════════════════ -->
+  <div class="modal-overlay" id="cert-modal" onclick="closeCertOnOverlay(event)">
+    <div class="modal-box">
+      <canvas id="cert-canvas" width="580" height="380"></canvas>
+      <div class="modal-footer">
+        <button class="btn-primary" onclick="downloadCert()">⬇️ Descargar certificado</button>
+        <button class="btn-secondary" onclick="closeCert()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/quiz.js"></script>
+
+</body>
+</html>
